@@ -134,6 +134,7 @@ def main_worker(gpu, ngpus_per_node, args):
         print(args)
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
+
     # init dataloader
     transform_train, transform_val = encoding.transforms.get_transform(
             args.dataset, args.base_size, args.crop_size, args.rand_aug)

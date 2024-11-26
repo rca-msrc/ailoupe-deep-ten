@@ -49,7 +49,7 @@ std::vector<at::Tensor> ScaledL2_Backward_CPU(
     const at::Tensor SL_);
 
 at::Tensor BatchNorm_Forward_CPU(
-  const at::Tensor input_, 
+  const at::Tensor input_,
   const at::Tensor mean_,
   const at::Tensor std_,
   const at::Tensor gamma_,
@@ -58,10 +58,10 @@ at::Tensor BatchNorm_Forward_CPU(
 std::vector<at::Tensor> BatchNorm_Backward_CPU(
   const at::Tensor gradoutput_,
   const at::Tensor input_,
-  const at::Tensor mean_, 
+  const at::Tensor mean_,
   const at::Tensor std_,
   const at::Tensor gamma_,
-  const at::Tensor beta_, 
+  const at::Tensor beta_,
   bool train);
 
 std::vector<at::Tensor> Sum_Square_Forward_CPU(
@@ -93,7 +93,8 @@ py::array_t<float> apply_transform(int H, int W, int C, py::array_t<float> img, 
   auto ctm_buf = ctm.request();
 
   // printf("H: %d, W: %d, C: %d\n", H, W, C);
-  py::array_t<float> result{(unsigned long)img_buf.size};
+  // py::array_t<float> result{(unsigned long)img_buf.size};
+  py::array_t<float> result{static_cast<ssize_t>(img_buf.size)};
   auto res_buf = result.request();
 
   float *img_ptr = (float *)img_buf.ptr;
