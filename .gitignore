@@ -1,3 +1,13 @@
+.ipynb_checkpoints/
+dist/
+encoding/datasets/.ipynb_checkpoints/
+encoding/lib/cpu/.ipynb_checkpoints/
+encoding/models/.ipynb_checkpoints/
+encoding/nn/.ipynb_checkpoints/
+encoding/transforms/.ipynb_checkpoints/
+experiments/recognition/.ipynb_checkpoints/
+torch_encoding.egg-info/
+
 *.DS_Store
 *.swp
 *.pyc
