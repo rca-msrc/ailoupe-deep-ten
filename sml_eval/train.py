@@ -224,7 +224,7 @@ def save_eval(args, all_predictions, all_targets, all_names, all_names2=None):
             metric_strings.append(f"{float(m)}")
 
     # include checkpoint name in order not to overwrite other evaluations
-    checkpoint_name = args.resume.split('/')[-2]  
+    checkpoint_name = args.resume.split('/')[-2]  # CHECK THIS
     save_dir = pathlib.Path("evaluation/%s/%s/%s/" % (args.dataset, args.model, checkpoint_name))
     if not os.path.exists(save_dir.as_posix()):
         os.makedirs(save_dir.as_posix())
@@ -331,7 +331,13 @@ def main_worker(gpu, ngpus_per_node, args):
         model_kwargs['rectified_conv'] = True
         model_kwargs['rectify_avg'] = args.rectify_avg
     
-    model = encoding.models.get_model(args.model, **model_kwargs)
+    #model = encoding.models.get_model(args.model, **model_kwargs)
+    #model = DeepTen(datasets[dataset.lower()].NUM_CLASS, backbone=backbone, **kwargs)
+    # I think that works....
+    if args.mode == 'single':
+        model = encoding.models.deepten.DeepTen(len(classes), backbone=args.model, **model_kwargs)
+    elif args.mode == 'single':
+        model = encoding.models.deepten.DualDeepTen(len(classes), backbone=args.model, **model_kwargs)
 
     if args.dropblock_prob > 0.0:
         from functools import partial
@@ -541,7 +547,8 @@ def main_worker(gpu, ngpus_per_node, args):
         training_progress["test_losses"].append(losses.avg)
         training_progress["test_accuracies"].append(100 * top1_acc)  # convert to percentage
         training_progress["test_accuracies_top5"].append(100 * top5_acc)  # convert to percentage
-        
+    
+    ## main    
     if args.export:
         if args.gpu == 0:
             torch.save(model.module.state_dict(), args.export + '.pth')
