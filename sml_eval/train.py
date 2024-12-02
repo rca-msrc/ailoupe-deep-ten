@@ -298,7 +298,7 @@ def main_worker(gpu, ngpus_per_node, args):
         trainset = get_dataset(args.dataset, args.mode, "train", args.train_n_per_class, transform_train)         
         train_sampler = torch.utils.data.distributed.DistributedSampler(trainset)
         train_loader = torch.utils.data.DataLoader(
-            trainset, batch_size=args.batch_size, shuffle=False,
+            trainset, batch_size=args.batch_size, shuffle=True,
             num_workers=args.workers, pin_memory=True,
             sampler=train_sampler)
 
